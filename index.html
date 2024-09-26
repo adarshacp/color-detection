@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Detection Web App</title>
+</head>
+<body>
+    <h1>Color Detection Web App</h1>
+    
+    <form action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data">
+        <label for="file">Upload an image:</label>
+        <input type="file" name="file" id="file" accept="image/*">
+        <input type="submit" value="Detect Color">
+    </form>
+
+    <h2>Uploaded Image:</h2>
+    <img id="uploadedImage" src="{{ url_for('static', filename='uploads/plg.jpg') }}" alt="Uploaded Image" 
+         style="max-width:400px; display: {% if image_url %} block {% else %} none {% endif %};">
+
+    {% if image_url %}
+    <script>
+        // If an image is uploaded, update the src attribute to show the uploaded image
+        document.getElementById('uploadedImage').src = "{{ url_for('static', filename='uploads/' + image_url) }}";
+        document.getElementById('uploadedImage').style.display = 'block';  // Ensure it is displayed
+    </script>
+    
+    <h2>Detected Color:</h2>
+    <p>{{ color_name }}</p>
+    <p id="rgb">{{ rgb_values }}</p>
+    {% endif %}
+    <style>
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+}
+
+form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="file"] {
+    margin: 10px 0;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+h2 {
+    color: #333;
+}
+h2:hover{
+    color: rgb(218, 0, 109);
+}
+
+img {
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    display: block;
+    margin: 20px auto;
+}
+ p{
+    color: rgb(7, 7, 7);
+    }
+</style>
+</body>
+</html>
